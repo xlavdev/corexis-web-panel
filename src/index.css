@@ -1,0 +1,185 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --ka-bg: #09090d;
+  --ka-surface: #1a1a1a;
+  --ka-surface-2: #121212;
+  --ka-border: #1a1a1a;
+  --ka-blue: #1d4ed8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+  background-color: var(--ka-bg);
+  color: #fff;
+}
+
+/* ─── KeyAuth v4 surface utilities ─────────────────────────────────────────── */
+.bg-custom-back {
+  background-color: #1a1a1a;
+}
+
+.bg-custom-back-1 {
+  background-color: #121212;
+}
+
+.border-custom {
+  border-color: #121212;
+}
+
+.border-custom-1 {
+  border-color: #1a1a1a;
+}
+
+.bg-custom-back-lbl {
+  background-color: #1a1a1a;
+}
+
+.bg-custom-back-lbl-1 {
+  background-color: #121212;
+}
+
+/* KeyAuth toggle switch */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #121212;
+  transition: 0.3s;
+  border-radius: 24px;
+}
+
+.toggle-slider::before {
+  position: absolute;
+  content: '';
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: #8b949e;
+  transition: 0.3s;
+  border-radius: 50%;
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background-color: #2563eb;
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+  transform: translateX(24px);
+  background-color: #fff;
+}
+
+.drag-active {
+  border-color: #2563eb !important;
+  background-color: #182136 !important;
+  box-shadow: 0 0 8px 2px #2563eb55;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+/* KeyAuth sidebar link with sliding blue background */
+.sidebar-link {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  color: #d1d5db;
+  transition: color 0.3s ease;
+}
+
+.sidebar-link > span {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: #1d4ed8;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease-out;
+  border-radius: 0.5rem;
+  z-index: 0;
+}
+
+.sidebar-link:hover::before {
+  transform: scaleX(1);
+}
+
+.sidebar-link:hover {
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+  color: #fff;
+}
+
+/* ─── KeyAuth-style motion ─────────────────────────────────────────────────── */
+@keyframes ka-spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes ka-fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-spin-slow {
+  animation: ka-spin-slow 45s linear infinite;
+}
+
+.animate-fade-up {
+  animation: ka-fade-up 0.45s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-spin-slow,
+  .animate-fade-up {
+    animation: none;
+  }
+}
+
+/* KeyAuth hides the page scrollbar; the dashboard keeps a slim one for the sidebar */
+*::-webkit-scrollbar {
+  display: none;
+}
+
+.sidebar-scroll::-webkit-scrollbar {
+  display: block;
+  width: 4px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: #3f3f46;
+  border-radius: 9999px;
+}
