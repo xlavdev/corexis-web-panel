@@ -94,12 +94,9 @@ export default function Login() {
             </h2>
           </div>
 
-          {/* Switch to Register link */}
-          <div className="text-center mb-6 text-sm text-gray-400">
-            Don't have an account?{' '}
-            <Link to="/register" className="text-blue-500 hover:text-blue-400 font-medium hover:underline">
-              Create an account
-            </Link>
+          {/* Private Notice */}
+          <div className="text-center mb-6 text-xs text-gray-500 font-mono">
+            RESTRICTED ACCESS &bull; AUTHORIZED OPERATORS ONLY
           </div>
 
           {/* Error Message Alert */}

@@ -53,21 +53,13 @@ export default function LandingPage() {
           </p>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex items-center justify-center">
             <Link
               to="/login"
-              className="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-sm shadow-xl shadow-blue-600/25 border border-blue-400/30 flex items-center justify-center gap-2.5 transition-all transform hover:-translate-y-0.5 active:translate-y-0 group"
+              className="w-full sm:w-auto px-10 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-sm shadow-xl shadow-blue-600/25 border border-blue-400/30 flex items-center justify-center gap-2.5 transition-all transform hover:-translate-y-0.5 active:translate-y-0 group cursor-pointer"
             >
               <span>Login to Dashboard</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-
-            <Link
-              to="/register"
-              className="w-full sm:w-auto px-6 py-4 rounded-xl bg-[#13131a] hover:bg-[#1a1a24] text-zinc-300 hover:text-white font-medium text-sm border border-white/10 flex items-center justify-center gap-2 transition-all"
-            >
-              <UserCheck className="w-4 h-4 text-zinc-400" />
-              <span>Create Account</span>
             </Link>
           </div>
 

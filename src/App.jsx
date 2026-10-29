@@ -6,7 +6,6 @@ import DashboardLayout from './components/layout/DashboardLayout';
 
 import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
-import Register from './pages/Register';
 import ManageApps from './pages/ManageApps';
 import Licenses from './pages/Licenses';
 import Users from './pages/Users';
@@ -35,7 +34,7 @@ export default function App() {
 
             {/* Auth */}
             <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/register" element={<Navigate to="/login" replace />} />
 
             {/* Corexis KeyAuth App Dashboard (/app/...) */}
             <Route
