@@ -71,9 +71,9 @@ export default function Team() {
             <Shield className="w-3.5 h-3.5" />
             <span>PRIVATE ACCESS ONLY</span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold text-white">Administrator Management</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-white">Account Management</h1>
           <p className="text-xs text-gray-400 mt-1 max-w-xl">
-            Public registration is disabled. Only authorized administrators can add new operator accounts from this console.
+            Public registration is disabled. Only you can create accounts here — each account gets its own Owner ID and its own separate applications.
           </p>
         </div>
 
@@ -87,7 +87,7 @@ export default function Team() {
           className="cursor-pointer px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs sm:text-sm rounded-xl flex items-center gap-2 shadow-lg shadow-blue-600/20 transition-all shrink-0"
         >
           <UserPlus className="w-4 h-4" />
-          <span>Add Administrator</span>
+          <span>Add Account</span>
         </button>
       </div>
 
@@ -174,8 +174,8 @@ export default function Team() {
                 <UserPlus className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-white">Add New Administrator</h3>
-                <p className="text-xs text-gray-400">Account will have administrative access</p>
+                <h3 className="text-base font-bold text-white">Add New Account</h3>
+                <p className="text-xs text-gray-400">The account can sign in and manage its own applications</p>
               </div>
             </div>
 
@@ -230,7 +230,7 @@ export default function Team() {
                   onChange={(e) => setForm({ ...form, role: e.target.value })}
                   className="w-full px-3.5 py-2.5 bg-[#18181f] border border-[#2a2a32] rounded-xl text-sm text-white focus:outline-none focus:border-blue-500"
                 >
-                  <option value="admin">Administrator (Full Access)</option>
+                  <option value="admin">Standard Account (Full Access)</option>
                   <option value="reseller">Reseller (Key Issuance Only)</option>
                 </select>
               </div>

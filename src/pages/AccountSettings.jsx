@@ -144,7 +144,7 @@ const PrimaryButton = ({ children, danger = false, type = 'submit', ...rest }) =
 
 export default function AccountSettings() {
   const location = useLocation();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const { selectedApp } = useAppContext();
 
   const [tab, setTab] = useState(() => {
@@ -172,6 +172,10 @@ export default function AccountSettings() {
   const [tfaError, setTfaError] = useState('');
   const [keyName, setKeyName] = useState('');
   const [words, setWords] = useState([]);
+  const [credForm, setCredForm] = useState({ username: '', currentPassword: '', newPassword: '', confirmPassword: '' });
+  const [credError, setCredError] = useState('');
+  const [credSaving, setCredSaving] = useState(false);
+  const [credDone, setCredDone] = useState(false);
 
   const [logSearch, setLogSearch] = useState('');
   const [showLogFilters, setShowLogFilters] = useState(false);
@@ -312,6 +316,37 @@ export default function AccountSettings() {
   };
 
   const closeModal = () => setModal('');
+
+  const submitCredentials = async (event) => {
+    event.preventDefault();
+    setCredError('');
+    if (credForm.newPassword && credForm.newPassword !== credForm.confirmPassword) {
+      setCredError('New passwords do not match.');
+      return;
+    }
+    if ((credForm.newPassword || credForm.username !== account.username) && !credForm.currentPassword) {
+      setCredError('Please enter your current password.');
+      return;
+    }
+    setCredSaving(true);
+    try {
+      const res = await api.post('/account/credentials', {
+        username: credForm.username.trim(),
+        currentPassword: credForm.currentPassword,
+        newPassword: credForm.newPassword || undefined
+      });
+      if (res.data.success) {
+        setCredDone(true);
+        setCredForm((prev) => ({ ...prev, currentPassword: '', newPassword: '', confirmPassword: '' }));
+      } else {
+        setCredError(res.data.message || 'Could not update credentials.');
+      }
+    } catch (err) {
+      setCredError(err?.response?.data?.message || 'Could not update credentials.');
+    } finally {
+      setCredSaving(false);
+    }
+  };
 
   const savePfp = async (event) => {
     event.preventDefault();
@@ -614,24 +649,19 @@ export default function AccountSettings() {
                     </div>
 
                     <div className="flex gap-3 justify-end">
-                      <a
-                        href="https://keyauth.cc/forgot/"
-                        target="_blank"
-                        rel="noreferrer"
-                        className={`${BTN} bg-custom-back hover:opacity-60`}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setCredError('');
+                          setCredDone(false);
+                          setCredForm({ username: account.username || '', currentPassword: '', newPassword: '', confirmPassword: '' });
+                          openModal('credentials');
+                        }}
+                        className={`${BTN} bg-custom-back hover:opacity-60 cursor-pointer`}
                       >
-                        <RefreshCw className="w-4 h-4 mr-2" />
-                        Change Password
-                      </a>
-                      <a
-                        href="https://keyauth.cc/changeEmail/"
-                        target="_blank"
-                        rel="noreferrer"
-                        className={`${BTN} bg-custom-back hover:opacity-60`}
-                      >
-                        <RefreshCw className="w-4 h-4 mr-2" />
-                        Change Email
-                      </a>
+                        <Lock className="w-4 h-4 mr-2" />
+                        Change Username / Password
+                      </button>
                     </div>
                   </div>
 
@@ -1416,6 +1446,110 @@ export default function AccountSettings() {
               </PrimaryButton>
             </div>
           </div>
+        </AccountModal>
+      )}
+
+      {/* Credentials modal */}
+      {modal === 'credentials' && (
+        <AccountModal
+          title="Change Username / Password"
+          icon={<Lock className="w-5 h-5 text-blue-500" />}
+          onClose={closeModal}
+          closeIcon
+        >
+          {credDone ? (
+            <>
+              <div className="px-6 pb-4">
+                <p className="text-sm text-gray-300">
+                  Credentials updated successfully. Please sign in again with your new details.
+                </p>
+              </div>
+              <div className="bg-custom-back-1 px-6 py-4 flex justify-end">
+                <PrimaryButton type="button" onClick={logout}>
+                  Go to Sign In
+                </PrimaryButton>
+              </div>
+            </>
+          ) : (
+            <form onSubmit={submitCredentials}>
+              <div className="px-6 pb-4 space-y-4">
+                {credError && (
+                  <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs">
+                    {credError}
+                  </div>
+                )}
+
+                <div className="relative">
+                  <input
+                    type="text"
+                    id="cred-username"
+                    name="cred-username"
+                    value={credForm.username}
+                    onChange={(e) => setCredForm({ ...credForm, username: e.target.value })}
+                    placeholder=" "
+                    className={FLOAT_INPUT}
+                  />
+                  <label htmlFor="cred-username" className={FLOAT_LABEL}>
+                    Username
+                  </label>
+                </div>
+
+                <div className="relative">
+                  <input
+                    type="password"
+                    id="cred-current"
+                    name="cred-current"
+                    value={credForm.currentPassword}
+                    onChange={(e) => setCredForm({ ...credForm, currentPassword: e.target.value })}
+                    placeholder=" "
+                    className={FLOAT_INPUT}
+                  />
+                  <label htmlFor="cred-current" className={FLOAT_LABEL}>
+                    Current Password
+                  </label>
+                </div>
+
+                <div className="relative">
+                  <input
+                    type="password"
+                    id="cred-new"
+                    name="cred-new"
+                    value={credForm.newPassword}
+                    onChange={(e) => setCredForm({ ...credForm, newPassword: e.target.value })}
+                    placeholder=" "
+                    className={FLOAT_INPUT}
+                  />
+                  <label htmlFor="cred-new" className={FLOAT_LABEL}>
+                    New Password (leave blank to keep)
+                  </label>
+                </div>
+
+                <div className="relative">
+                  <input
+                    type="password"
+                    id="cred-confirm"
+                    name="cred-confirm"
+                    value={credForm.confirmPassword}
+                    onChange={(e) => setCredForm({ ...credForm, confirmPassword: e.target.value })}
+                    placeholder=" "
+                    className={FLOAT_INPUT}
+                  />
+                  <label htmlFor="cred-confirm" className={FLOAT_LABEL}>
+                    Confirm New Password
+                  </label>
+                </div>
+              </div>
+
+              <div className="bg-custom-back-1 px-6 py-4">
+                <div className="flex space-x-3 justify-end">
+                  <CancelButton onClick={closeModal} />
+                  <PrimaryButton type="submit" disabled={credSaving}>
+                    {credSaving ? 'Saving...' : 'Save Changes'}
+                  </PrimaryButton>
+                </div>
+              </div>
+            </form>
+          )}
         </AccountModal>
       )}
 

@@ -17,10 +17,10 @@ export default function SiteHeader() {
               Client Area
             </Link>
             <Link
-              to="/register"
+              to="/login"
               className="text-white focus:ring-0 font-medium rounded-lg text-sm px-4 py-2 lg:px-5 lg:py-2.5 bg-blue-700 hover:opacity-50 transition duration-200"
             >
-              Onboard Now
+              Sign In
             </Link>
           </div>
 
