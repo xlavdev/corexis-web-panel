@@ -6,7 +6,7 @@ import { useAppContext } from '../context/AppContext';
 import { InfoTip } from '../components/ui/ka.jsx';
 import {
   Home, ChevronsRight, RefreshCw, Image as ImageIcon, CircleAlert, TriangleAlert,
-  Key, X, Trash, Funnel, LayoutGrid, List, Download, Crown, Layers, CreditCard,
+  Key, X, Trash, Funnel, LayoutGrid, List, Download, Layers, CreditCard,
   Copy, UserLock, Save, CirclePlus, Monitor, Lock, Check
 } from 'lucide-react';
 
@@ -1078,7 +1078,6 @@ export default function AccountSettings() {
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                   <div>
                     <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                      <Crown className="w-5 h-5 text-yellow-400" />
                       Premium Billing
                     </h2>
                     <p className="text-sm text-gray-400 mt-1">

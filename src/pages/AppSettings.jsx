@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useAppContext } from '../context/AppContext';
 import api from '../services/api';
 import {
-  Home, ChevronsRight, Crown, ChevronRight, FingerprintPattern, FolderDown,
+  Home, ChevronsRight, ChevronRight, FingerprintPattern, FolderDown,
   Blocks, ShieldAlert, Timer, Link as LinkIcon, MessageSquare, MessageSquareQuote,
   Store, DollarSign, UsersRound, ShieldHalf, Shield, Database, MessageSquareDot,
   Wrench, CodeXml, Save, X, Settings, RotateCcw
@@ -643,9 +643,6 @@ export default function AppSettings() {
               aria-selected="false"
             >
               <span>Seller</span>
-              <span className="text-yellow-400" title="Premium feature">
-                <Crown className="w-4 h-4" />
-              </span>
             </button>
           </div>
         </div>
@@ -709,7 +706,6 @@ export default function AppSettings() {
                     >
                       <MessageSquare className="w-4 h-4 flex-shrink-0" />
                       <span className="truncate">Reseller</span>
-                      <Crown className="w-3 h-3 text-yellow-400 flex-shrink-0" />
                     </button>
 
                     <button
@@ -722,7 +718,6 @@ export default function AppSettings() {
                     >
                       <UsersRound className="w-4 h-4 flex-shrink-0" />
                       <span className="truncate">Customer Panel</span>
-                      <Crown className="w-3 h-3 text-yellow-400 flex-shrink-0" />
                     </button>
 
                     <button

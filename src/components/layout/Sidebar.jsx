@@ -2,15 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAppContext } from '../../context/AppContext';
 import { navItems, bottomItems } from '../../config/navigation';
-import { ChevronDown, Crown, X, ExternalLink } from 'lucide-react';
-
-function CrownBadge() {
-  return (
-    <span className="ml-auto text-yellow-400" title="Premium feature">
-      <Crown className="w-4 h-4" />
-    </span>
-  );
-}
+import { ChevronDown, X, ExternalLink } from 'lucide-react';
 
 export default function Sidebar({ open, onClose }) {
   const { apps, selectedApp, selectApp } = useAppContext();
@@ -114,7 +106,7 @@ export default function Sidebar({ open, onClose }) {
 
           <hr className="border-[#121212] my-2" />
 
-          {navItems.map(({ to, icon: Icon, label, premium }) => (
+          {navItems.map(({ to, icon: Icon, label }) => (
             <NavLink
               key={to}
               to={to}
@@ -125,7 +117,6 @@ export default function Sidebar({ open, onClose }) {
                 <Icon className="w-4 h-4" />
                 {label}
               </span>
-              {premium && <CrownBadge />}
             </NavLink>
           ))}
 
