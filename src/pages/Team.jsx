@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '../services/api';
+import { roleLabel } from '../utils/roleLabel';
 import { Users2, UserPlus, Trash2, Shield, Mail, Key, CheckCircle2, AlertCircle, X } from 'lucide-react';
 
 export default function Team() {
@@ -51,7 +52,7 @@ export default function Team() {
   };
 
   const handleDelete = async (id, username) => {
-    if (!window.confirm(`Are you sure you want to remove administrator '${username}'?`)) return;
+    if (!window.confirm(`Are you sure you want to remove account '${username}'?`)) return;
     try {
       const res = await api.delete(`/team/${id}`);
       if (res.data.success) {
@@ -134,7 +135,7 @@ export default function Team() {
                   <td className="py-3.5 px-4 text-gray-300 font-mono text-[11px]">{m.email}</td>
                   <td className="py-3.5 px-4">
                     <span className="bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded-full text-[10px] font-bold border border-blue-500/20 uppercase tracking-wider">
-                      {m.role || 'Admin'}
+                      {roleLabel(m.role)}
                     </span>
                   </td>
                   <td className="py-3.5 px-4 text-gray-500 text-[11px]">
@@ -144,7 +145,7 @@ export default function Team() {
                     <button
                       type="button"
                       onClick={() => handleDelete(m.id, m.username)}
-                      title="Remove Administrator"
+                      title="Remove account"
                       className="text-gray-500 hover:text-red-400 transition-colors p-1.5 rounded-lg hover:bg-red-500/10 cursor-pointer"
                     >
                       <Trash2 className="w-4 h-4" />

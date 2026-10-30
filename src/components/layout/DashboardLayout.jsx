@@ -3,6 +3,7 @@ import { Outlet, NavLink, useLocation, useNavigate, useSearchParams } from 'reac
 import { Search, ChevronDown, KeyRound, UserRoundCog, LogOut, CreditCard } from 'lucide-react';
 import Sidebar from './Sidebar';
 import { navItems } from '../../config/navigation';
+import { roleLabel } from '../../utils/roleLabel';
 import { useAuth } from '../../context/AuthContext';
 
 const searchablePages = [
@@ -23,8 +24,7 @@ export default function DashboardLayout() {
   const profileRef = useRef(null);
 
   const username = user?.username || 'admin';
-  const role = (user?.role || 'Administrator').toString();
-  const plan = role.toLowerCase() === 'admin' ? 'Administrator' : role;
+  const plan = roleLabel(user?.role);
 
   useEffect(() => {
     const pageParam = searchParams.get('page');
