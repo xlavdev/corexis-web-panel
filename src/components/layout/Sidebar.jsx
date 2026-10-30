@@ -2,12 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAppContext } from '../../context/AppContext';
 import { navItems, bottomItems } from '../../config/navigation';
-import { ChevronDown, X, ExternalLink } from 'lucide-react';
+import { ChevronDown, X } from 'lucide-react';
 
 export default function Sidebar({ open, onClose }) {
   const { apps, selectedApp, selectApp } = useAppContext();
   const [appMenu, setAppMenu] = useState(false);
-  const [resourcesOpen, setResourcesOpen] = useState(false);
   const appMenuRef = useRef(null);
 
   useEffect(() => {
@@ -124,72 +123,21 @@ export default function Sidebar({ open, onClose }) {
 
         {/* Bottom links */}
         <div className="p-4 border-t border-[#121212] shrink-0">
-          {bottomItems.map(({ to, icon: Icon, label, resource }) =>
-            resource ? (
-              <button
-                key={label}
-                type="button"
-                onClick={() => setResourcesOpen(true)}
-                className="mb-2 cursor-pointer w-full relative overflow-hidden group flex items-center text-gray-300 p-2 rounded-lg transition sidebar-link"
-              >
-                <span className="flex items-center gap-2 relative z-10">
-                  <Icon className="w-4 h-4" />
-                  {label}
-                </span>
-              </button>
-            ) : (
-              <NavLink
-                key={label}
-                to={to}
-                onClick={closeMobile}
-                className="mb-2 relative overflow-hidden group w-full flex items-center text-gray-300 p-2 rounded-lg transition sidebar-link"
-              >
-                <span className="flex items-center gap-2 relative z-10">
-                  <Icon className="w-4 h-4" />
-                  {label}
-                </span>
-              </NavLink>
-            )
-          )}
+          {bottomItems.map(({ to, icon: Icon, label }) => (
+            <NavLink
+              key={label}
+              to={to}
+              onClick={closeMobile}
+              className="mb-2 relative overflow-hidden group w-full flex items-center text-gray-300 p-2 rounded-lg transition sidebar-link"
+            >
+              <span className="flex items-center gap-2 relative z-10">
+                <Icon className="w-4 h-4" />
+                {label}
+              </span>
+            </NavLink>
+          ))}
         </div>
       </aside>
-
-      {resourcesOpen && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="bg-custom-back-1 border border-[#1a1a1a] rounded-xl w-full max-w-md shadow-lg">
-            <div className="flex items-center justify-between px-5 py-4 border-b border-[#1a1a1a]">
-              <h3 className="text-white font-semibold">Resources</h3>
-              <button
-                type="button"
-                onClick={() => setResourcesOpen(false)}
-                className="text-gray-400 hover:text-white"
-                aria-label="Close resources"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="p-2">
-              {[
-                { label: 'Documentation', href: 'https://keyauth.readme.io' },
-                { label: 'Examples', href: 'https://github.com/keyauth' },
-                { label: 'Support Center', href: 'https://keyauth.tawk.help' },
-                { label: 'API Reference', href: 'https://keyauth.readme.io/reference' },
-              ].map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center justify-between px-4 py-3 rounded-lg text-sm text-gray-300 hover:bg-[#1a1a1a] hover:text-white transition"
-                >
-                  {link.label}
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }

@@ -1,7 +1,7 @@
 import {
   Layers, Key, Users, Tag, CreditCard, MessageSquare, Timer,
   Webhook, FolderLock, Variable, Scale, ScrollText,
-  CloudDownload, Users2, Settings, HelpCircle,
+  CloudDownload, Users2, Settings,
 } from 'lucide-react';
 
 /* KeyAuth v4 dashboard navigation (app nav + fixed bottom links) */
@@ -24,5 +24,4 @@ export const navItems = [
 
 export const bottomItems = [
   { to: '/app/app-settings', icon: Settings, label: 'Settings' },
-  { resource: true, icon: HelpCircle, label: 'Resources' },
 ];
