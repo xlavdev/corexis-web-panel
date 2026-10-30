@@ -31,3 +31,14 @@ api.interceptors.response.use(
 );
 
 export default api;
+
+// Fire-and-forget ping that wakes the serverless function before the user
+// submits a form (kills most of the perceived "cold start" delay).
+export function warmUpBackend() {
+  try {
+    const origin = API_BASE.replace(/\/api\/.*$/, '');
+    fetch(`${origin}/`, { method: 'GET', cache: 'no-store' }).catch(() => {});
+  } catch (e) {
+    /* ignore */
+  }
+}

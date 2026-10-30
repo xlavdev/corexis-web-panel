@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useAppContext } from '../context/AppContext';
+import { warmUpBackend } from '../services/api';
 import SiteFooter from '../components/layout/SiteFooter';
 
 function FloatingField({ id, label, type = 'text', value, onChange, required, rightElement }) {
@@ -43,6 +44,11 @@ export default function Login() {
   const [rememberMe, setRememberMe] = useState(true);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // Warm the serverless function while the user is still typing.
+  useEffect(() => {
+    warmUpBackend();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
