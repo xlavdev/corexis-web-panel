@@ -422,8 +422,7 @@ export default function ManageApps() {
               {!showCode && selectedApp && (
                 <div className="transition-opacity duration-300">
                   <Field label="Application Name" value={selectedApp.name} onCopy={copy} />
-                  <Field label="Application ID" value={selectedApp.id || selectedApp._id} onCopy={copy} />
-                  <Field label="Owner ID" value={selectedApp.ownerId} onCopy={copy} />
+                  <Field label="Account Owner ID" value={selectedApp.ownerId} onCopy={copy} />
                   <Field label="Application Secret" value={selectedApp.secret} secret onCopy={copy} />
                   <Field label="Application Version" value={selectedApp.version || '1.0'} onCopy={copy} />
 
